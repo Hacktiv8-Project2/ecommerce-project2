@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { getAllCart } from "../features/cartSlice";
 
 function NavbarComponent() {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +9,7 @@ function NavbarComponent() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
+  const cartCount = useSelector(getAllCart);
   return (
     <nav className="bg-gray-800 mb-6">
       <div className="mx-auto px-4 py-6 md:py-8 md:flex md:items-center md:justify-between">
@@ -66,6 +68,13 @@ function NavbarComponent() {
                 }
               >
                 <i class="fa-sharp fa-solid fa-cart-shopping"></i>Cart
+                {cartCount?.length ? (
+                  <div className="absolute top-6 l text-xs rounded-full bg-red-500 text-white px-1">
+                    {cartCount.length}
+                  </div>
+                ) : (
+                  <></>
+                )}
               </NavLink>
               <NavLink
                 to="/login"
