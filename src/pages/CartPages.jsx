@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import CartItemComponent from "../components/CartItemComponent";
 
 function CartPages() {
   return (
-    <div>CartPages</div>
-  )
+    <div className="md:container md:mx-auto">
+      <CartItemComponent />
+    </div>
+  );
 }
 
-export default CartPages
+export default CartPages;
