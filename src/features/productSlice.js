@@ -23,6 +23,8 @@ export const productSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.products = action.payload;
     });
+
+
     // [fetchProducts.pending]: () => console.log("pending"),
     // [fetchProducts.fulfilled]: (state, { payload }) => {
     //   console.log("fetch successfully");
@@ -31,6 +33,16 @@ export const productSlice = createSlice({
     // [fetchProducts.rejected]: () => console.log("rejected"),
   },
 });
+
+export const getProductById = (state, productId) => {
+  const products = state.products;
+
+  if (Array.isArray(products)) {
+    return products.find((product) => product.id === Number(productId));
+  }
+
+  return null;
+};
 
 export const getAllProduct = (state) => state.products.products;
 export default productSlice.reducer;
