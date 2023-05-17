@@ -2,16 +2,27 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../features/cartSlice";
 import { fetchProducts, getAllProduct } from "../features/productSlice";
+import { useLocation, useNavigate } from "react-router";
+import { userLogin } from "../features/authSlice";
 
 function CardComponent() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isUserLogin = useSelector((state) => state.auth.token);
+
   const products = useSelector(getAllProduct);
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
   // console.log(products)
 
   const handleAddToCart = (item) => {
+    if (isUserLogin === null) {
+      return navigate("/login", {state: location});
+    }
+    
     dispatch(addItem(item));
   };
   return (
