@@ -12,7 +12,7 @@ function CartBoxComponent({ cartProduct }) {
             }, 0)}
           </div>
           <div className="flex self-end w-40 border-b mb-2 border-blue-700 text-lg font-bold">
-            Quantity : $
+            Price : $
             {cartProduct.reduce((sum, item) => {
               return sum + item.price;
             }, 0)}
