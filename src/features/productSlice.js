@@ -11,7 +11,11 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
     const response = await axios.get(URL);
-    return response.data;
+    const updatedProducts = response.data.map((res) => ({
+      ...res,
+      stock: 20,
+    }));
+    return updatedProducts;
   }
 );
 
@@ -23,12 +27,6 @@ export const productSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.products = action.payload;
     });
-    // [fetchProducts.pending]: () => console.log("pending"),
-    // [fetchProducts.fulfilled]: (state, { payload }) => {
-    //   console.log("fetch successfully");
-    //   return { ...state, products: payload };
-    // },
-    // [fetchProducts.rejected]: () => console.log("rejected"),
   },
 });
 
