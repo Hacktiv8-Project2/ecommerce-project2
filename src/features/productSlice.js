@@ -11,7 +11,11 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
     const response = await axios.get(URL);
-    return response.data;
+    const updatedProducts = response.data.map((res) => ({
+      ...res,
+      stock: 20,
+    }));
+    return updatedProducts;
   }
 );
 
@@ -35,7 +39,7 @@ export const productSlice = createSlice({
 });
 
 export const getProductById = (state, productId) => {
-  const products = state.products;
+  const products = state.products.products;
 
   if (Array.isArray(products)) {
     return products.find((product) => product.id === Number(productId));

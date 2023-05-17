@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
+import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import {
   decrementItem,
@@ -11,16 +12,17 @@ import CartBoxComponent from "./CartBoxComponent";
 function CartItemComponent() {
   const dispatch = useDispatch();
   const cartProduct = useSelector(getAllCart);
+
   const handleRemoveCart = (item) => {
     dispatch(removeItem(item));
   };
-
   const increment = (item) => {
     dispatch(incrementItem(item));
   };
   const decrement = (item) => {
     dispatch(decrementItem(item));
   };
+
   return (
     <>
       {cartProduct.length ? (
@@ -44,12 +46,16 @@ function CartItemComponent() {
                 {/* <div className="flex"> */}
                 <div className="ml-6 flex space-x-2">
                   <div
-                    className="cursor-pointer select-none text-lg"
+                    className="cursor-pointer select-none text-lg mr-6"
                     onClick={() => decrement(item.id)}
                   >
                     -
                   </div>
-                  <p className=" text-lg font-medium">{item.qty}</p>
+                  <input
+                    type="number"
+                    value={item.qty}
+                    className=" text-lg font-medium w-10"
+                  />
                   <div
                     className="cursor-pointer select-none text-lg"
                     onClick={() => increment(item.id)}
