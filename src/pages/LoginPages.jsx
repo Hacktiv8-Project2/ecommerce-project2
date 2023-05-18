@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from 'react';
 import { useLocation, Navigate } from 'react-router';
-import { userLogin } from "../features/authSlice";
+import { userLogin } from "../features/auth/authSlice";
 
 function LoginPages() {
   const dispatch = useDispatch();
@@ -24,6 +24,10 @@ function LoginPages() {
   const handleOnSubmit = (event) => {
     event.preventDefault();
     dispatch(userLogin({username, password}));
+  }
+
+  if (auth.token === "admin@bukapedia.com") {
+    return <Navigate to="/admin" />
   }
 
   if (auth.isAuthenticated) {

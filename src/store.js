@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'
 import cartSlice from "./features/cartSlice";
 import productSlice from "./features/productSlice";
-import authReducer from "./features/authSlice";
+import authReducer from "./features/auth/authSlice";
 
 const persistConfig = {
   key: "root",

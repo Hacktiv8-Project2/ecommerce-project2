@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllCart } from "../features/cartSlice";
 import { useNavigate, useLocation } from "react-router-dom";
-import { userLogout } from "../features/authSlice";
+import { userLogout } from "../features/auth/authSlice";
 import Button from "./button/Button";
 
 function NavbarComponent() {
@@ -14,7 +14,7 @@ function NavbarComponent() {
   const [isOpen, setIsOpen] = useState(false);
 
   const cartCount = useSelector(getAllCart);
-  const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const {isAuthenticated: isUserAuthenticated, token} = useSelector((state) => state.auth);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -99,43 +99,35 @@ function NavbarComponent() {
               >
                 Home
               </NavLink>
-              <NavLink
-                to="/cart"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                <i class="fa-sharp fa-solid fa-cart-shopping"></i>Cart
-                {cartCount?.length ? (
-                  <div className="absolute top-6 l text-xs rounded-full bg-red-500 text-white px-1">
-                    {cartCount.length}
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </NavLink>
-              <NavLink
-                to="/recap"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                Recap
-              </NavLink>
-              <NavLink
-                to="/admin"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                Admin
-              </NavLink>
+              {(token === "admin@bukapedia.com") ? 
+                <NavLink
+                  to="/recap"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-yellow-300"
+                      : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+                  }
+                >
+                  Recap
+                </NavLink> :
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-yellow-300"
+                      : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+                  }
+                >
+                  <i class="fa-sharp fa-solid fa-cart-shopping"></i>Cart
+                  {cartCount?.length ? (
+                    <div className="absolute top-6 l text-xs rounded-full bg-red-500 text-white px-1">
+                      {cartCount.length}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </NavLink>
+              }
               {button}
             </ul>
           </div>
