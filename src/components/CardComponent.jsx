@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../features/cartSlice";
 import { fetchProducts, getAllProduct } from "../features/productSlice";
 import { useLocation, useNavigate } from "react-router";
-import { userLogin } from "../features/authSlice";
 
 function CardComponent() {
   const dispatch = useDispatch();

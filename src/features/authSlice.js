@@ -4,12 +4,11 @@ import axios from "axios";
 export const userLogin = createAsyncThunk('auth/login', async ({username, password}) => {
   try {
     if (username === "johnd" && password === "m38rmF$") {
-      const userData = {
+
+      const response = await axios.post('https://fakestoreapi.com/auth/login', {
         username,
         password,
-      }
-
-      const response = await axios.post('https://fakestoreapi.com/auth/login', userData);
+      });
 
       return response.data.token;
     }
@@ -22,7 +21,7 @@ export const userLogin = createAsyncThunk('auth/login', async ({username, passwo
 });
 
 const initialState = {
-  isLoading: null,
+  isLoading: false,
   isAuthenticated: false,
   errorMessage: '',
   token: null,
