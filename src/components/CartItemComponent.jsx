@@ -53,7 +53,7 @@ function CartItemComponent() {
                     ""
                   )}
                   <div
-                    className="cursor-pointer select-none text-lg mr-6"
+                    className="cursor-pointer select-none text-lg"
                     onClick={() => decrement(item.id)}
                   >
                     -

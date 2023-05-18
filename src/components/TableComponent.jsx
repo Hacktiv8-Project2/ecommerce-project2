@@ -1,11 +1,6 @@
 import React from "react";
 
-function TableComponent() {
-  const data = [
-    { column1: "Data 1", column2: "Data 2", column3: "Data 3" },
-    { column1: "Data 4", column2: "Data 5", column3: "Data 6" },
-    { column1: "Data 7", column2: "Data 8", column3: "Data 9" },
-  ];
+function TableComponent({ products }) {
   return (
     <div className="overflow-x-auto">
       <table className="table-auto min-w-full">
@@ -17,26 +12,28 @@ function TableComponent() {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
-            <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : ""}>
+          {products?.map((item, idx) => (
+            <tr key={idx} className={idx % 2 === 0 ? "bg-gray-100" : ""}>
               <td className="border px-4 py-2">
                 <div className="flex items-center">
                   <img
                     className="w-16 h-16 object-cover mr-4"
-                    src="./images/book.jfif"
+                    src={item.image}
                     alt=""
                   />
                   <div className="px-6">
-                    <div className="font-medium text-lg mb-2">
-                      {row.column1}
-                    </div>
-                    <div className="block text-md mb-2">{row.column1}</div>
-                    <p className="text-gray-400 text-base">{row.column1}</p>
+                    <div className="font-medium text-lg mb-2">{item.title}</div>
+                    <div className="block text-md mb-2">{item.category}</div>
+                    <p className="text-gray-400 text-base">
+                      {item.description}
+                    </p>
                   </div>
                 </div>
               </td>
               <td className="border px-4 py-2">
-                <div className="text-center">{row.column2}</div>
+                <div className="text-center">
+                  <input value={item.stock} type="number" />
+                </div>
               </td>
               <td className="border px-4 py-2">
                 <div className="text-center">
