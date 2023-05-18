@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { setCheckout, clearCart } from "../features/cartSlice";
+import { useNavigate } from "react-router";
 
-function CartBoxComponent({ cartProduct }) {
+function CartBoxComponent({ cartProduct, dispatch }) {
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    dispatch(setCheckout(cartProduct));
+    navigate("/");
+  };
+
   return (
     <>
       <div className="border items-end w-fit">
@@ -26,8 +35,11 @@ function CartBoxComponent({ cartProduct }) {
               .toFixed(2)}
           </div>
           <div className="text-center">
-            <button className="mt-4 bg-blue-700 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full">
-              <a href="">Checkout</a>
+            <button
+              onClick={() => handleCheckout()}
+              className="mt-4 bg-blue-700 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
+            >
+              Checkout
             </button>
           </div>
         </div>

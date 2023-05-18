@@ -10,7 +10,7 @@ function TableComponent() {
     <div className="overflow-x-auto">
       <table className="table-auto min-w-full">
         <thead>
-          <tr>
+          <tr className="bg-yellow-400">
             <th className="px-4 py-2">Products</th>
             <th className="px-4 py-2">Stock</th>
             <th className="px-4 py-2">Action</th>

@@ -45,7 +45,7 @@ function CartItemComponent() {
                 </div>
                 {/* <div className="flex"> */}
                 <div className="ml-6 flex space-x-2">
-                  {item.qty >= item.stock ? (
+                  {item.qty > item.stock ? (
                     <div className="mr-5 text-red-600">
                       Kuantitas melebihi stok produk!
                     </div>
@@ -80,7 +80,7 @@ function CartItemComponent() {
               </div>
             ))}
           </div>
-          <CartBoxComponent cartProduct={cartProduct} />
+          <CartBoxComponent dispatch={dispatch} cartProduct={cartProduct} />
         </div>
       ) : (
         <div className="justify-center">
