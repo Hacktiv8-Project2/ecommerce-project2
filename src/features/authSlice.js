@@ -32,6 +32,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     userLogout: (state) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.errorMessage = '';
       state.token = null;
     }
   },

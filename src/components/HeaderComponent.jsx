@@ -1,15 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllCart } from "../features/cartSlice";
+import { useNavigate, useLocation } from "react-router-dom";
+import { userLogout } from "../features/authSlice";
+import Button from "./button/Button";
 
 function NavbarComponent() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isOpen, setIsOpen] = useState(false);
+
   const cartCount = useSelector(getAllCart);
+  const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleLoginClick = () => {
+    navigate("/login", {state: location}); 
+  }
+
+  const handleLogoutClick = () => {
+    dispatch(userLogout());
+    navigate("/", {replace: true});
+  }
+
+  let button;
+
+  if (isUserAuthenticated) {
+    button = (
+      <Button
+        className="block py-2 pl-3 pr-4 text-white rounded md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+        onClick={handleLogoutClick}>
+          Logout
+      </Button>
+    );
+
+  } else {
+    button = (
+      <Button
+        className="block py-2 pl-3 pr-4 text-white rounded md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+        onClick={handleLoginClick}>
+        Login
+      </Button>
+    )
+  }
 
   return (
     <nav className="bg-gray-800 mb-6">
@@ -77,26 +116,7 @@ function NavbarComponent() {
                   <></>
                 )}
               </NavLink>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                Login
-              </NavLink>
-              <NavLink
-                to="/logout"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                Logout
-              </NavLink>
+              {button}
             </ul>
           </div>
         </div>
