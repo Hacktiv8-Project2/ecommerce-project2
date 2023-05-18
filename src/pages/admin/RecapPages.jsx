@@ -3,13 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCheck } from "../../features/cartSlice";
 
 function RecapPages() {
-  const dispatch = useDispatch();
   const checkProduct = useSelector(getAllCheck);
-  const data = [
-    { column1: "Data 1", column2: "Data 2", column3: "Data 3" },
-    { column1: "Data 4", column2: "Data 5", column3: "Data 6" },
-    { column1: "Data 7", column2: "Data 8", column3: "Data 9" },
-  ];
+
   return (
     <div className="overflow-x-auto">
       <table className="table-auto min-w-full">
