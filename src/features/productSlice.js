@@ -44,6 +44,16 @@ export const productSlice = createSlice({
   },
 });
 
+export const getProductById = (state, productId) => {
+  const products = state.products.products;
+
+  if (Array.isArray(products)) {
+    return products.find((product) => product.id === Number(productId));
+  }
+
+  return null;
+};
+
 export const { updateStock } = productSlice.actions;
 export const getAllProduct = (state) => state.products.products;
 export default productSlice.reducer;

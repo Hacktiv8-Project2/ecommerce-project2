@@ -5,6 +5,7 @@ import RecapPages from "./pages/admin/RecapPages";
 import CartPages from "./pages/CartPages";
 import HomePages from "./pages/HomePages";
 import LoginPages from "./pages/LoginPages";
+import DetailPages from "./pages/DetailPages";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePages />}></Route>
         <Route path="/cart" element={<CartPages />}></Route>
+        <Route path="/detail/:productId" element={<DetailPages />}></Route>
         <Route path="/login" element={<LoginPages />}></Route>
         <Route path="/recap" element={<RecapPages />}></Route>
         <Route path="/admin" element={<AdminHomePages />}></Route>
