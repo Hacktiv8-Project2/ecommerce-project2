@@ -45,17 +45,22 @@ function CartItemComponent() {
                 </div>
                 {/* <div className="flex"> */}
                 <div className="ml-6 flex space-x-2">
+                  {item.qty >= item.stock ? (
+                    <div className="mr-5 text-red-600">
+                      Kuantitas melebihi stok produk!
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <div
-                    className="cursor-pointer select-none text-lg mr-6"
+                    className="cursor-pointer select-none text-lg"
                     onClick={() => decrement(item.id)}
                   >
                     -
                   </div>
-                  <input
-                    type="number"
-                    value={item.qty}
-                    className=" text-lg font-medium w-10"
-                  />
+                  <p type="number" className=" text-lg font-medium">
+                    {item.qty}
+                  </p>
                   <div
                     className="cursor-pointer select-none text-lg"
                     onClick={() => increment(item.id)}
