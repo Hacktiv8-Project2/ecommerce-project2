@@ -5,11 +5,12 @@ import { getAllCart } from "../features/cartSlice";
 
 function NavbarComponent() {
   const [isOpen, setIsOpen] = useState(false);
+  const cartCount = useSelector(getAllCart);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const cartCount = useSelector(getAllCart);
+
   return (
     <nav className="bg-gray-800 mb-6">
       <div className="mx-auto px-4 py-6 md:py-8 md:flex md:items-center md:justify-between">
