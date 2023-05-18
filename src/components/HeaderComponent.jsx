@@ -1,15 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllCart } from "../features/cartSlice";
+import { useNavigate, useLocation } from "react-router-dom";
+import { userLogout } from "../features/auth/authSlice";
+import Button from "./button/Button";
 
 function NavbarComponent() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isOpen, setIsOpen] = useState(false);
+
+  const cartCount = useSelector(getAllCart);
+  const {isAuthenticated: isUserAuthenticated, token} = useSelector((state) => state.auth);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const cartCount = useSelector(getAllCart);
+
+  const handleLoginClick = () => {
+    navigate("/login", {state: location}); 
+  }
+
+  const handleLogoutClick = () => {
+    dispatch(userLogout());
+    navigate("/", {replace: true});
+  }
+
+  let button;
+
+  if (isUserAuthenticated) {
+    button = (
+      <Button
+        className="block py-2 pl-3 pr-4 text-white rounded md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+        onClick={handleLogoutClick}>
+          Logout
+      </Button>
+    );
+
+  } else {
+    button = (
+      <Button
+        className="block py-2 pl-3 pr-4 text-white rounded md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+        onClick={handleLoginClick}>
+        Login
+      </Button>
+    )
+  }
+
   return (
     <nav className="bg-gray-800 mb-6">
       <div className="mx-auto px-4 py-6 md:py-8 md:flex md:items-center md:justify-between">
@@ -59,63 +99,36 @@ function NavbarComponent() {
               >
                 Home
               </NavLink>
-              <NavLink
-                to="/cart"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                <i class="fa-sharp fa-solid fa-cart-shopping"></i>Cart
-                {cartCount?.length ? (
-                  <div className="absolute top-6 l text-xs rounded-full bg-red-500 text-white px-1">
-                    {cartCount.length}
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </NavLink>
-              <NavLink
-                to="/recap"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                Recap
-              </NavLink>
-              <NavLink
-                to="/admin"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                Admin
-              </NavLink>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                Login
-              </NavLink>
-              <NavLink
-                to="/logout"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                }
-              >
-                Logout
-              </NavLink>
+              {(token === "admin@bukapedia.com") ? 
+                <NavLink
+                  to="/recap"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-yellow-300"
+                      : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+                  }
+                >
+                  Recap
+                </NavLink> :
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-yellow-300"
+                      : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+                  }
+                >
+                  <i class="fa-sharp fa-solid fa-cart-shopping"></i>Cart
+                  {cartCount?.length ? (
+                    <div className="absolute top-6 l text-xs rounded-full bg-red-500 text-white px-1">
+                      {cartCount.length}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </NavLink>
+              }
+              {button}
             </ul>
           </div>
         </div>

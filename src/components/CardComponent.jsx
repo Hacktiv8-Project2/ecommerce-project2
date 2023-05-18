@@ -2,10 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../features/cartSlice";
 import { fetchProducts, getAllProduct } from "../features/productSlice";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function CardComponent() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isUserLogin = useSelector((state) => state.auth.token);
+
   const products = useSelector(getAllProduct);
 
   useEffect(() => {
@@ -14,6 +18,10 @@ function CardComponent() {
   // console.log(products)
 
   const handleAddToCart = (item) => {
+    if (isUserLogin === null) {
+      return navigate("/login", {state: location});
+    }
+    
     dispatch(addItem(item));
   };
 
