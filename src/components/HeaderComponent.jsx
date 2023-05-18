@@ -116,6 +116,26 @@ function NavbarComponent() {
                   <></>
                 )}
               </NavLink>
+              <NavLink
+                to="/recap"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-yellow-300"
+                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+                }
+              >
+                Recap
+              </NavLink>
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-yellow-300"
+                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+                }
+              >
+                Admin
+              </NavLink>
               {button}
             </ul>
           </div>
