@@ -1,10 +1,9 @@
 import axios from "axios";
-
-const baseURL = "https://fakestoreapi.com";
+import CONFIG from "../config/config";
 
 export const authLogin = async ({username, password}) => {
   if (username === "johnd" && password === "m38rmF$") {
-    const response = await axios.post(`${baseURL}/auth/login`, {
+    const response = await axios.post(`${CONFIG.baseURL}/auth/login`, {
       username, 
       password
     });
