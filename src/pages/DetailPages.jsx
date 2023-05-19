@@ -1,22 +1,29 @@
-import { useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { getProductById } from "../features/productSlice";
 import { useState, React } from "react";
+import { addItem } from "../features/cartSlice";
 
 function DetailPages() {
   const { productId } = useParams();
   const product = useSelector((state) => getProductById(state, productId));
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isUserLogin = useSelector((state) => state.auth.token);
 
   // const handleSizeChange = (e) => {
   //   setSelectedSize(e.target.value);
   // };
 
-  const handleAddToCart = () => {
-    console.log("Add to Cart clicked");
-    console.log("Selected Size:", selectedSize);
-    console.log("Quantity:", quantity);
+  const handleAddToCart = (item) => {
+    if (isUserLogin === null) {
+      return navigate("/login", {state: location});
+    }
+    
+    dispatch(addItem(item));
   };
 
   if (!product) {
@@ -72,10 +79,12 @@ function DetailPages() {
               />
               <button
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart(product)}
               >
                 Add to Cart
               </button>
+
+
             </div>
 
 
