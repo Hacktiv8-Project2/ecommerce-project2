@@ -13,12 +13,11 @@ function DetailPages() {
   //   setSelectedSize(e.target.value);
   // };
 
-  // const handleAddToCart = () => {
-  //   // Add your logic to add the selected product to the cart
-  //   console.log("Add to Cart clicked");
-  //   console.log("Selected Size:", selectedSize);
-  //   console.log("Quantity:", quantity);
-  // };
+  const handleAddToCart = () => {
+    console.log("Add to Cart clicked");
+    console.log("Selected Size:", selectedSize);
+    console.log("Quantity:", quantity);
+  };
 
   if (!product) {
     return <div>Loading...</div>;
@@ -27,8 +26,8 @@ function DetailPages() {
   const { title, category, description, image, price } = product;
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="max-w-xl bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="w-screen bg-white flex items-center justify-center">
+      <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="md:flex">
           <img src={image} alt={title} className="w-full md:w-1/3 h-auto" />
 
@@ -49,21 +48,36 @@ function DetailPages() {
             <p className="text-gray-800 text-lg font-bold mb-4">
               ${price}
             </p>
-            
+
             <div className="flex items-center mb-2">
-              <label className="mr-2 text-gray-600">Quantity:</label>
+              <select
+                className="w-29 px-2 py-1 border rounded"
+                value={selectedSize}
+                onChange={(e) => setSelectedSize(e.target.value)}
+              >
+                <option value="">Select Size</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+              </select>
+            </div>
+            
+            <div className="flex items-center mb-4">
               <input
                 type="number"
                 min="1"
-                className="w-16 px-2 py-1 border rounded"
+                className="w-16 px-2 py-1 border rounded mr-2"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
               />
+              <button
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                onClick={handleAddToCart}
+              >
+                Add to Cart
+              </button>
             </div>
 
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 mb-4">
-              Add to Cart
-            </button>
 
             <h3 className="text-l font-bold mb-2">PRODUCT DETAILS</h3>
 
