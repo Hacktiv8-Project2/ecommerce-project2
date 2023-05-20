@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useLocation, Navigate } from 'react-router';
 import { userLogin } from "../features/auth/authSlice";
 import Button from "../components/button/Button";
+import Loading from "../components/Loading";
 
 function LoginPages() {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ function LoginPages() {
           <p className="mt-5 text-red-500 text-sm -mb-2">{auth.errorMessage}</p>
         }
       </form>
+      <Loading isLoading={auth.isLoading} />
     </div>
   );
 }
