@@ -27,7 +27,7 @@ function LoginPages() {
   }
 
   if (auth.token === "admin@bukapedia.com") {
-    return <Navigate to="/admin" />
+    return <Navigate to="/" />
   }
 
   if (auth.isAuthenticated) {
