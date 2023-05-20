@@ -15,5 +15,5 @@ export const authLogin = async ({username, password}) => {
     return username;
   }
 
-  return Promise.reject("Invalid username and password");
+  return Promise.reject("Username dan password salah");
 }
