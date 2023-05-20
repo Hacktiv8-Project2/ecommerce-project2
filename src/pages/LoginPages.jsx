@@ -7,7 +7,7 @@ import Button from "../components/button/Button";
 function LoginPages() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.pathname || "/";
   const auth = useSelector((state) => state.auth);
 
   const [username, setUsername] = useState('');
