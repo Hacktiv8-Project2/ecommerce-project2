@@ -4,6 +4,7 @@ import { useLocation, Navigate } from 'react-router';
 import { userLogin } from "../features/auth/authSlice";
 import Button from "../components/button/Button";
 import Loading from "../components/Loading";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 function LoginPages() {
   const dispatch = useDispatch();
@@ -86,6 +87,8 @@ function LoginPages() {
         {auth.errorMessage &&
           <p className="mt-5 text-red-500 text-sm -mb-2">{auth.errorMessage}</p>
         }
+        <EyeIcon />
+        <EyeSlashIcon />
       </form>
       <Loading isLoading={auth.isLoading} />
     </div>
