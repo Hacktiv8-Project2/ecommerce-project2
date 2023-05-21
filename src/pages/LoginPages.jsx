@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from 'react';
+import { useState } from "react";
 import { useLocation, Navigate } from 'react-router';
 import { userLogin } from "../features/auth/authSlice";
 import Button from "../components/button/Button";
@@ -12,8 +12,13 @@ function LoginPages() {
   const from = location.state?.pathname || "/";
   const auth = useSelector((state) => state.auth);
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword((showPassword) => !showPassword);
+  }
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -68,15 +73,26 @@ function LoginPages() {
           >
             Password
           </label>
-          <input
-            className="text-sm border-b border-slate-300 w-full py-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-b-2 focus:border-sky-500 focus:transition focus:duration-120"
-            id="password"
-            type="password"
-            placeholder="Masukkan password"
-            value={password}
-            onChange={handlePasswordChange}
-            autoComplete="off"
-          />
+          <div className="relative">
+            <input
+              className="text-sm border-b border-slate-300 w-full py-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-b-2 focus:border-sky-500 focus:transition focus:duration-120 pr-7"
+              id="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Masukkan password"
+              value={password}
+              onChange={handlePasswordChange}
+              autoComplete="off"
+            />
+            <Button
+              className={password.length ? "w-5 absolute right-0 top-2" : "hidden"}
+              type="button"
+              onClick={handleShowPassword}>
+              {showPassword? 
+                <EyeIcon /> : 
+                <EyeSlashIcon />
+              }
+            </Button>
+          </div>
         </div>
         <Button
           className="w-full bg-sky-500 hover:bg-sky-600 active:bg-sky-500 text-white font-medium py-2 px-4 rounded-full focus:outline-none"
@@ -87,8 +103,8 @@ function LoginPages() {
         {auth.errorMessage &&
           <p className="mt-5 text-red-500 text-sm -mb-2">{auth.errorMessage}</p>
         }
-        <EyeIcon />
-        <EyeSlashIcon />
+        {/* <EyeIcon />
+        <EyeSlashIcon /> */}
       </form>
       <Loading isLoading={auth.isLoading} />
     </div>
