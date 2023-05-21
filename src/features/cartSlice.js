@@ -44,20 +44,6 @@ const cartSlice = createSlice({
           return item;
         });
     },
-
-    // updateStock: (state, action) => {
-    //   state.cart
-    //     ?.filter((item) => item.id === action.payload)
-    //     .map((item) => {
-    //       const currentStock = item.stock;
-    //       if (item.qty <= currentStock) {
-    //         item.stock = currentStock - item.qty;
-    //       } else {
-    //         item.stock = currentStock;
-    //       }
-    //       return item;
-    //     });
-    // },
     clearCart: (state, action) => (state.cart = []),
     setCheckout: (state, action) => {
       state.checkout = action.payload;
@@ -72,7 +58,6 @@ export const {
   decrementItem,
   clearCart,
   setCheckout,
-  // updateStock,
 } = cartSlice.actions;
 export const getAllCart = (state) => state.cart.cart;
 export const getAllCheck = (state) => state.cart.checkout;

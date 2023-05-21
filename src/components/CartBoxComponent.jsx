@@ -1,13 +1,18 @@
 import React, { useEffect } from "react";
 import { setCheckout, clearCart } from "../features/cartSlice";
 import { useNavigate } from "react-router";
+import { checkoutProducts } from "../features/productSlice";
 
 function CartBoxComponent({ cartProduct, dispatch }) {
   const navigate = useNavigate();
 
   const handleCheckout = () => {
+    cartProduct.forEach((item) => {
+      dispatch(checkoutProducts({ productId: item.id, quantity: item.qty }));
+    });
     dispatch(setCheckout(cartProduct));
-    navigate("/");
+    dispatch(clearCart());
+    // navigate("/");
   };
 
   return (

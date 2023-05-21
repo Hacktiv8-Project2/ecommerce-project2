@@ -23,18 +23,12 @@ export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    updateStock: (state, action) => {
-      state.products
-        ?.filter((item) => item.id === action.payload)
-        .map((item) => {
-          const currentStock = item.stock;
-          if (item.qty <= currentStock) {
-            item.stock = currentStock - item.qty;
-          } else {
-            item.stock = currentStock;
-          }
-          return item;
-        });
+    checkoutProducts(state, action) {
+      const { productId, quantity } = action.payload;
+      const product = state.products.find((p) => p.id === productId);
+      if (product) {
+        product.stock -= quantity;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -54,6 +48,6 @@ export const getProductById = (state, productId) => {
   return null;
 };
 
-export const { updateStock } = productSlice.actions;
+export const { checkoutProducts } = productSlice.actions;
 export const getAllProduct = (state) => state.products.products;
 export default productSlice.reducer;
