@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
 import { setCheckout, clearCart } from "../features/cartSlice";
 import { useNavigate } from "react-router";
 import { checkoutProducts } from "../features/productSlice";
+import { useDispatch } from "react-redux";
 
-function CartBoxComponent({ cartProduct, dispatch }) {
+function CartBoxComponent({ cartProduct }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCheckout = () => {
@@ -12,7 +13,7 @@ function CartBoxComponent({ cartProduct, dispatch }) {
     });
     dispatch(setCheckout(cartProduct));
     dispatch(clearCart());
-    // navigate("/");
+    navigate("/", {replace: true});
   };
 
   return (
@@ -41,7 +42,7 @@ function CartBoxComponent({ cartProduct, dispatch }) {
           </div>
           <div className="text-center">
             <button
-              onClick={() => handleCheckout()}
+              onClick={handleCheckout}
               className="mt-4 bg-blue-700 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
             >
               Checkout

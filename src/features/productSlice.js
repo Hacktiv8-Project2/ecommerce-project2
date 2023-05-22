@@ -23,17 +23,24 @@ export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    checkoutProducts(state, action) {
+    updateStock: (state, action) => {
+      const {id, stock } = action.payload;
+      state.products.filter((product) => product.id === id)
+      .map((product) => product.stock = stock);
+    },
+    checkoutProducts: (state, action) => {
       const { productId, quantity } = action.payload;
-      const product = state.products.find((p) => p.id === productId);
-      if (product) {
-        product.stock -= quantity;
-      }
+      
+      const product = state.products.find((product) => product.id === productId);
+
+      product.stock -= quantity;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.products = action.payload;
+      if (!state.products.length) {
+        state.products = action.payload;
+      }
     });
   },
 });
@@ -48,6 +55,6 @@ export const getProductById = (state, productId) => {
   return null;
 };
 
-export const { checkoutProducts } = productSlice.actions;
+export const { updateStock, checkoutProducts } = productSlice.actions;
 export const getAllProduct = (state) => state.products.products;
 export default productSlice.reducer;

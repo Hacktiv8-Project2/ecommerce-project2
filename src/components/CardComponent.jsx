@@ -28,15 +28,15 @@ function CardComponent() {
   return (
     <>
       {products?.map((product, idx) => (
-        <div key={idx} className="max-w-xs rounded overflow-hidden shadow-lg">
-          <img className="mx-auto w-[75%] h-[35%]" src={product.image} alt="" />
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">{product.title}</div>
+        <div key={idx} className="max-w-xs rounded overflow-hidden shadow-lg my-10">
+          <img className="mx-auto h-[200px] object-contain" src={product.image} alt={product.title} />
+          <div className="p-6">
+            <div className="font-bold text-xl mb-2 line-clamp-1">{product.title}</div>
 
             <div className="block font-bold px-2 text-md mb-2 bg-yellow-300 rounded-full w-max">
               {product.category}
             </div>
-            <p className="text-gray-700 text-base">{product.description}</p>
+            <p className="text-gray-700 text-base line-clamp-3">{product.description}</p>
 
             <div className="flex justify-end">
               <button className="mt-4 bg-blue-700 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full">

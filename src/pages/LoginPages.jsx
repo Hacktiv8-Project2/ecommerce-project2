@@ -1,17 +1,24 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from 'react';
+import { useState } from "react";
 import { useLocation, Navigate } from 'react-router';
-import { userLogin } from "../features/auth/authSlice";
+import { userLogin } from "../features/authSlice";
+import Button from "../components/button/Button";
+import Loading from "../components/Loading";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 function LoginPages() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.pathname || "/";
   const auth = useSelector((state) => state.auth);
-  console.log(auth);
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword((showPassword) => !showPassword);
+  }
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -27,7 +34,7 @@ function LoginPages() {
   }
 
   if (auth.token === "admin@bukapedia.com") {
-    return <Navigate to="/admin" />
+    return <Navigate to="/" />
   }
 
   if (auth.isAuthenticated) {
@@ -35,61 +42,71 @@ function LoginPages() {
   }
   
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="w-full max-w-md">
-        <form 
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" 
-          onSubmit={handleOnSubmit}>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-bold mb-2"
-              htmlFor="username"
-            >
-              username
-            </label>
+    <div className="flex justify-center items-center h-screen bg-slate-100 -mt-6">
+      <form
+        className="w-11/12 px-6 sm:w-[380px] bg-white sm:px-8 py-12 rounded-md shadow-md -mt-10"
+        onSubmit={handleOnSubmit}>
+        <h1 className="text-3xl text-center font-semibold">Selamat Datang Kembali!</h1>
+        <p className="text-sm text-center text-slate-500 mt-2">Silahkan masuk untuk mengelola akun anda</p>
+
+        <div className="mb-5 mt-12">
+          <label
+            className="block text-gray-700 font-medium mb-1 text-sm"
+            htmlFor="username"
+          >
+            Username
+          </label>
+          <input
+            className="border-b border-slate-300 w-full py-2 text-gray-700 leading-tight focus:outline-none focus:border-b-2 focus:border-sky-500 focus:transition focus:duration-120 text-sm"
+            id="username"
+            type="text"
+            placeholder="Masukkan username"
+            value={username}
+            onChange={handleUsernameChange}
+            autoComplete="off"
+          />
+        </div>
+        <div className="mb-5">
+          <label
+            className="block text-gray-700 font-bold mb-1 text-sm font-medium"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <div className="relative">
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              placeholder="input username"
-              value={username}
-              onChange={handleUsernameChange}
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 font-bold mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-sm border-b border-slate-300 w-full py-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-b-2 focus:border-sky-500 focus:transition focus:duration-120 pr-7"
               id="password"
-              type="password"
-              placeholder="input password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Masukkan password"
               value={password}
               onChange={handlePasswordChange}
+              autoComplete="off"
             />
+            <Button
+              className={password.length ? "w-5 absolute right-0 top-2" : "hidden"}
+              type="button"
+              onClick={handleShowPassword}>
+              {showPassword? 
+                <EyeIcon /> : 
+                <EyeSlashIcon />
+              }
+            </Button>
           </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Sign In
-            </button>
-          </div>
-          <div className="message">
-            {auth.isLoading &&
-              <p className="mt-5 text-red-500">loading...</p>
-            }
-            {auth.errorMessage &&
-              <p className="mt-5 text-red-500">{auth.errorMessage}</p>
-            }
-          </div>
-        </form>
-      </div>
+        </div>
+        <Button
+          className="w-full bg-sky-500 hover:bg-sky-600 active:bg-sky-500 text-white font-medium py-2 px-4 rounded-full focus:outline-none"
+          type="submit"
+        >
+          Masuk
+        </Button>
+        {auth.errorMessage &&
+          <p className="mt-5 text-red-500 text-sm -mb-2">{auth.errorMessage}</p>
+        }
+        {/* <EyeIcon />
+        <EyeSlashIcon /> */}
+      </form>
+      <Loading isLoading={auth.isLoading} />
     </div>
   );
 }
