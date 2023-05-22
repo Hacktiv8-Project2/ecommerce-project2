@@ -13,19 +13,7 @@ function DetailPages() {
   const navigate = useNavigate();
   const location = useLocation();
   const isUserLogin = useSelector((state) => state.auth.token);
-
-  // const handleSizeChange = (e) => {
-  //   setSelectedSize(e.target.value);
-  // };
-
-  // const handleAddToCart = (item) => {
-  //   if (isUserLogin === null) {
-  //     return navigate("/login", {state: location});
-  //   }
-    
-  //   dispatch(addItem(item));
-  // };
-
+  
   const handleAddToCart = () => {
     if (isUserLogin === null) {
       return navigate("/login", { state: location });
