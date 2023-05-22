@@ -20,7 +20,7 @@ const cartSlice = createSlice({
       state.cart = oldItems;
     },
     removeItem: (state, action) => {
-      state.cart = state.cart.filter((item) => item.id != action.payload);
+      state.cart = state.cart.filter((item) => item.id !== action.payload);
     },
     incrementItem: (state, action) => {
       state.cart
@@ -36,7 +36,7 @@ const cartSlice = createSlice({
         ?.filter((item) => item.id === action.payload)
         .map((item) => {
           const currentVal = item.qty;
-          if (currentVal == 1) {
+          if (currentVal === 1) {
             item.qty = currentVal;
           } else {
             item.qty = currentVal - 1;
@@ -44,23 +44,11 @@ const cartSlice = createSlice({
           return item;
         });
     },
-
-    // updateStock: (state, action) => {
-    //   state.cart
-    //     ?.filter((item) => item.id === action.payload)
-    //     .map((item) => {
-    //       const currentStock = item.stock;
-    //       if (item.qty <= currentStock) {
-    //         item.stock = currentStock - item.qty;
-    //       } else {
-    //         item.stock = currentStock;
-    //       }
-    //       return item;
-    //     });
-    // },
-    clearCart: (state, action) => (state.cart = []),
+    clearCart: (state) => {
+      state.cart = [];
+    },
     setCheckout: (state, action) => {
-      state.checkout = action.payload;
+      state.checkout.push(...action.payload);
     },
   },
 });
@@ -72,7 +60,6 @@ export const {
   decrementItem,
   clearCart,
   setCheckout,
-  // updateStock,
 } = cartSlice.actions;
 export const getAllCart = (state) => state.cart.cart;
 export const getAllCheck = (state) => state.cart.checkout;

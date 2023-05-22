@@ -17,7 +17,7 @@ export default function ProductRow({ product }) {
   }
 
   return (
-    <tr>
+    <tr className="even:bg-slate-100">
       <td className="border px-4 py-2">
         <div className="flex items-center">
           <img
@@ -36,7 +36,8 @@ export default function ProductRow({ product }) {
       </td>
       <td className="border px-4 py-2">
         <div className="text-center">
-          <input 
+          <input
+            className="border border-slate-300"
             value={stock} 
             type="number"
             onChange={handleStockChange} />

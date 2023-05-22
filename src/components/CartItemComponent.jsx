@@ -80,7 +80,7 @@ function CartItemComponent() {
               </div>
             ))}
           </div>
-          <CartBoxComponent dispatch={dispatch} cartProduct={cartProduct} />
+          <CartBoxComponent cartProduct={cartProduct} />
         </div>
       ) : (
         <div className="justify-center">

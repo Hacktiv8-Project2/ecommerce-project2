@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useLocation, Navigate } from 'react-router';
-import { userLogin } from "../features/auth/authSlice";
+import { userLogin } from "../features/authSlice";
 import Button from "../components/button/Button";
 import Loading from "../components/Loading";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";

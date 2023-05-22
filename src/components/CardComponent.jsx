@@ -19,9 +19,9 @@ function CardComponent() {
 
   const handleAddToCart = (item) => {
     if (isUserLogin === null) {
-      return navigate("/login", {state: location});
+      return navigate("/login", { state: location });
     }
-    
+
     dispatch(addItem(item));
   };
 
@@ -31,7 +31,6 @@ function CardComponent() {
         <div key={idx} className="max-w-xs rounded overflow-hidden shadow-lg">
           <img className="mx-auto w-[75%] h-[35%]" src={product.image} alt="" />
           <div className="px-6 py-4">
-            
             <div className="font-bold text-xl mb-2">{product.title}</div>
 
             <div className="block font-bold px-2 text-md mb-2 bg-yellow-300 rounded-full w-max">
@@ -41,9 +40,7 @@ function CardComponent() {
 
             <div className="flex justify-end">
               <button className="mt-4 bg-blue-700 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full">
-                <Link to={`/detail/${product.id}`}>
-                  Detail
-                </Link>
+                <Link to={`/detail/${product.id}`}>Detail</Link>
               </button>
 
               <button

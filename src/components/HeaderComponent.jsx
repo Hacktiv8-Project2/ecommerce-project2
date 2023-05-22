@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllCart } from "../features/cartSlice";
 import { useNavigate, useLocation } from "react-router-dom";
-import { userLogout } from "../features/auth/authSlice";
+import { userLogout } from "../features/authSlice";
 import Button from "./button/Button";
 
 function NavbarComponent() {
