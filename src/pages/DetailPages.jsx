@@ -34,9 +34,9 @@ function DetailPages() {
 
   return (
     <div className="w-screen bg-white flex items-center justify-center">
-      <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="md:flex">
-          <img src={image} alt={title} className="mx-auto h-[400px] object-contain" />
+      <div className="max-screen w-full bg-white rounded-lg overflow-hidden">
+        <div className="md:flex mt-6 ml-6">
+          <img src={image} alt={title} className="mx-auto h-[400px] w-64 md:w-1/3 object-contain shadow-lg rounded-lg" />
 
           <div className="p-6 md:w-2/3">
             <nav className="text-sm mb-4">
