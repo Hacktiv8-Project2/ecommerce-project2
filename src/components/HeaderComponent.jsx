@@ -51,7 +51,7 @@ function NavbarComponent() {
   }
 
   return (
-    <nav className="bg-gray-800 mb-6">
+    <nav className="bg-gray-800 mb-6 sticky top-0 z-10">
       <div className="mx-auto px-4 py-6 md:py-8 md:flex md:items-center md:justify-between">
         <div className="flex items-center justify-between">
           <div className="md:hidden">
