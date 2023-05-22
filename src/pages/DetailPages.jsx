@@ -30,7 +30,7 @@ function DetailPages() {
     return <div>Loading...</div>;
   }
 
-  const { title, category, description, image, price } = product;
+  const { title, category, description, image, price, stock } = product;
 
   return (
     <div className="w-screen bg-white flex items-center justify-center">
@@ -55,7 +55,7 @@ function DetailPages() {
             <p className="text-gray-800 text-lg font-bold mb-4">
               ${price}
             </p>
-
+            <p>{stock}</p>
             <div className="flex items-center mb-2">
               <select
                 className="w-29 px-2 py-1 border rounded"
@@ -83,7 +83,6 @@ function DetailPages() {
               >
                 Add to Cart
               </button>
-
 
             </div>
 

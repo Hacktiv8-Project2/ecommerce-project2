@@ -24,22 +24,16 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     updateStock: (state, action) => {
-      state.products
-        ?.filter((item) => item.id === action.payload)
-        .map((item) => {
-          const currentStock = item.stock;
-          if (item.qty <= currentStock) {
-            item.stock = currentStock - item.qty;
-          } else {
-            item.stock = currentStock;
-          }
-          return item;
-        });
+      const {id, stock } = action.payload;
+      state.products.filter((product) => product.id === id)
+      .map((product) => product.stock = stock);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.products = action.payload;
+      if (!state.products.length) {
+        state.products = action.payload;
+      }
     });
   },
 });
