@@ -36,7 +36,7 @@ function DetailPages() {
     <div className="w-screen bg-white flex items-center justify-center">
       <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="md:flex">
-          <img src={image} alt={title} className="w-full md:w-1/3 h-auto" />
+          <img src={image} alt={title} className="mx-auto h-[400px] object-contain" />
 
           <div className="p-6 md:w-2/3">
             <nav className="text-sm mb-4">
@@ -55,7 +55,7 @@ function DetailPages() {
             <p className="text-gray-800 text-lg font-bold mb-4">
               ${price}
             </p>
-            <p>{stock}</p>
+            <p className="text-gray-800 text-lg font-bold mb-4">Available: {stock} pcs</p>
             <div className="flex items-center mb-2">
               <select
                 className="w-29 px-2 py-1 border rounded"
