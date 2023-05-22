@@ -18,13 +18,29 @@ function DetailPages() {
   //   setSelectedSize(e.target.value);
   // };
 
-  const handleAddToCart = (item) => {
+  // const handleAddToCart = (item) => {
+  //   if (isUserLogin === null) {
+  //     return navigate("/login", {state: location});
+  //   }
+    
+  //   dispatch(addItem(item));
+  // };
+
+  const handleAddToCart = () => {
     if (isUserLogin === null) {
-      return navigate("/login", {state: location});
+      return navigate("/login", { state: location });
     }
     
-    dispatch(addItem(item));
-  };
+    const productToAdd = {
+      ...product,
+      quantity: parseInt(quantity),
+    };
+  
+    for (let i = 0; i < productToAdd.quantity; i++) {
+      dispatch(addItem(productToAdd));
+    }
+  };  
+  
 
   if (!product) {
     return <div>Loading...</div>;
@@ -43,10 +59,10 @@ function DetailPages() {
               <ol className="list-none p-0 inline-flex">
                 <li className="flex items-center">
                   <Link to="/" className="text-blue-500 hover:underline">
-                    Home/ 
+                    Home
                   </Link>
                 </li>
-                <li className="text-gray-500">{category}</li>
+                <li className="text-gray-500">/{category}</li>
               </ol>
             </nav>
 
@@ -79,7 +95,7 @@ function DetailPages() {
               />
               <button
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                onClick={() => handleAddToCart(product)}
+                onClick={handleAddToCart}
               >
                 Add to Cart
               </button>
