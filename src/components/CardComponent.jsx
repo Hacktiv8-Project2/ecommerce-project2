@@ -71,26 +71,31 @@ function CardComponent() {
         </div>
       ))}
 
-      {showGoToTop && (
-        <button
-          className="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-full shadow-md flex items-center"
-          onClick={goToTop}
+    {showGoToTop && (
+      <button
+        className="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-md shadow-md flex flex-col items-center transition-colors duration-300 hover:bg-gray-300 hover:text-gray-800"
+        onClick={goToTop}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-5 w-5 mb-1"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-5 w-5 mr-1"
-          >
-            <polyline points="18 15 12 9 6 15"></polyline>
-          </svg>
-          Go to Top
-        </button>
-      )}
+          <path d="M12 19V5M5 12l7-7 7 7"></path>
+        </svg>
+        <span className="text-xs font-medium">Top</span>
+      </button>
+
+
+
+
+    )}
+
 
     </>
   );

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
+import emptyCartImage from "./../assets/cart-empty.png";
+
 import {
   decrementItem,
   getAllCart,
@@ -83,10 +85,17 @@ function CartItemComponent() {
           <CartBoxComponent cartProduct={cartProduct} />
         </div>
       ) : (
-        <div className="justify-center">
-          <p className="text-xl font-bold text-gray-500">
-            Anda Belum Memilih Item
-          </p>
+        // <div className="justify-center">
+        //   <p className="text-xl font-bold text-gray-500">
+        //     Anda Belum Memilih Item
+        //   </p>
+        // </div>
+
+        <div className="container mx-auto">
+          <div className="flex flex-col items-center justify-center py-10">
+            <img src={emptyCartImage} alt="Empty Cart" className="md-auto h-68 mb-4" />
+            <p className="text-gray-500 text-lg">Your cart is empty</p>
+          </div>
         </div>
       )}
     </>
