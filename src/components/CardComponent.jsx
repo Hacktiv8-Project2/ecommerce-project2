@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../features/cartSlice";
 import { fetchProducts, getAllProduct } from "../features/productSlice";
@@ -9,6 +9,7 @@ function CardComponent() {
   const navigate = useNavigate();
   const location = useLocation();
   const isUserLogin = useSelector((state) => state.auth.token);
+  const [showGoToTop, setShowGoToTop] = useState(false);
 
   const products = useSelector(getAllProduct);
 
@@ -23,6 +24,22 @@ function CardComponent() {
     }
 
     dispatch(addItem(item));
+  };
+
+  const handleScroll = () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    setShowGoToTop(scrollTop > 500);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const goToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -53,6 +70,28 @@ function CardComponent() {
           </div>
         </div>
       ))}
+
+      {showGoToTop && (
+        <button
+          className="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-full shadow-md flex items-center"
+          onClick={goToTop}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-5 w-5 mr-1"
+          >
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+          Go to Top
+        </button>
+      )}
+
     </>
   );
 }
