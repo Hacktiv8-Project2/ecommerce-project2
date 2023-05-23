@@ -14,17 +14,21 @@ function DetailPages() {
   const location = useLocation();
   const isUserLogin = useSelector((state) => state.auth.token);
 
-  // const handleSizeChange = (e) => {
-  //   setSelectedSize(e.target.value);
-  // };
-
-  const handleAddToCart = (item) => {
+  const handleAddToCart = () => {
     if (isUserLogin === null) {
-      return navigate("/login", {state: location});
+      return navigate("/login", { state: location });
     }
     
-    dispatch(addItem(item));
-  };
+    const productToAdd = {
+      ...product,
+      quantity: parseInt(quantity),
+    };
+  
+    for (let i = 0; i < productToAdd.quantity; i++) {
+      dispatch(addItem(productToAdd));
+    }
+  };  
+  
 
   if (!product) {
     return <div>Loading...</div>;
@@ -34,19 +38,19 @@ function DetailPages() {
 
   return (
     <div className="w-screen bg-white flex items-center justify-center">
-      <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="md:flex">
-          <img src={image} alt={title} className="w-full md:w-1/3 h-auto" />
+      <div className="max-screen w-full bg-white rounded-lg overflow-auto">
+        <div className="md:flex mt-6 ml-6 ">
+          <img src={image} alt={title} className="mx-auto h-[400px] w-64 md:w-1/3 object-contain shadow-lg rounded-lg" />
 
           <div className="p-6 md:w-2/3">
             <nav className="text-sm mb-4">
               <ol className="list-none p-0 inline-flex">
                 <li className="flex items-center">
                   <Link to="/" className="text-blue-500 hover:underline">
-                    Home/ 
+                    Home
                   </Link>
                 </li>
-                <li className="text-gray-500">{category}</li>
+                <li className="text-gray-500">/{category}</li>
               </ol>
             </nav>
 
@@ -55,7 +59,7 @@ function DetailPages() {
             <p className="text-gray-800 text-lg font-bold mb-4">
               ${price}
             </p>
-            <p>{stock}</p>
+            <p className="text-gray-800 text-lg font-bold mb-4">Available: {stock} pcs</p>
             <div className="flex items-center mb-2">
               <select
                 className="w-29 px-2 py-1 border rounded"
@@ -79,7 +83,7 @@ function DetailPages() {
               />
               <button
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                onClick={() => handleAddToCart(product)}
+                onClick={handleAddToCart}
               >
                 Add to Cart
               </button>

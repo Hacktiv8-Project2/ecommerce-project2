@@ -51,7 +51,7 @@ function NavbarComponent() {
   }
 
   return (
-    <nav className="flex items-center gap-x-5 px-36 py-5 border-b border-slate-200 mb-10">
+    <nav className=" sticky top-0 z-10 bg-white flex items-center gap-x-5 px-36 py-5 border-b border-slate-200 mb-10">
       <h1 className="text-3xl text-[#003e29] font-medium"><Link to="/">blipedia</Link></h1>
       <div className="flex items-center justify-between">
         <div className="md:hidden">
