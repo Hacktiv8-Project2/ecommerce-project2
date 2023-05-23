@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { addItem } from "../../features/cartSlice";
 import Button from "../button/Button";
+import { MinusSmallIcon } from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/24/solid";
 
 export default function CardItemComponent({ product }) {
   const dispatch = useDispatch();
@@ -18,25 +20,35 @@ export default function CardItemComponent({ product }) {
   }
 
   return (
-    <div className="max-w-xs justify-self-center rounded overflow-hidden border border-slate-200 my-10">
-      <Link to={`/detail/${product.id}`}>
-        <img className="mx-auto h-[200px] object-contain" src={product.image} alt={product.title} />
+    <div className="max-w-xs justify-self-center rounded-lg overflow-hidden border border-slate-200">
+      <Link 
+        className="p-5 flex h-[200px]"
+        to={`/detail/${product.id}`}>
+        <img className="w-full h-full object-contain" src={product.image} alt={product.title} />
       </Link>
       <div className="p-6">
         <Link to={`/detail/${product.id}`}>
-          <h4 className="font-bold text-xl mb-2 line-clamp-1">{product.title}</h4>
+          <h4 className="font-medium text-lg mb-2 line-clamp-1">{product.title}</h4>
         </Link>
 
-        <div className="block font-bold px-2 text-md mb-2 bg-yellow-300 rounded-full w-max">
-          {product.category}
+        <div className="font-medium mb-2 text-[#d7334c]">
+          Rp {product.price}
         </div>
-        <p className="text-gray-700 text-base line-clamp-3">{product.description}</p>
+        <p className="text-gray-700 text-sm line-clamp-2 leading-relaxed">{product.description}</p>
 
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center mt-5 flex-wrap gap-y-3">
+          <div className="flex items-center text-gray-600">
+            <StarIcon className="w-4 text-[#26a126] -mt-0.5" />
+            <span className="text-sm ml-1">
+              {product.rating.rate}
+            </span>
+            <MinusSmallIcon className="rotate-90 w-5" />
+            <span className="text-sm">{product.rating.count} ulasan</span> 
+          </div>
           <Button
-            className="mt-4 ml-2 bg-yellow-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            className="bg-[#003e29] hover:bg-[#070707] text-white font-medium text-sm py-2 px-4 rounded-full"
             onClick={() => handleAddToCart(product)}>
-              Add to cart
+              Add to Cart
           </Button>
         </div>
       </div>

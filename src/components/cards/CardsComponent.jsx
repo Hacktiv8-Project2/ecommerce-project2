@@ -19,7 +19,7 @@ function CardsComponent({ className }) {
     if (product.category !== lastCategory) {
       productList.push(
         <h3 
-          className="text-center sm:text-left col-span-full text-2xl capitalize font-medium mt-5">
+          className="text-center sm:text-left col-span-full text-2xl capitalize font-medium mt-10">
           {product.category}
         </h3>
       );
