@@ -51,8 +51,8 @@ function NavbarComponent() {
   }
 
   return (
-    <nav className="bg-gray-800 mb-6">
-      <div className="mx-auto px-4 py-6 md:py-8 md:flex md:items-center md:justify-between">
+    <nav className="bg-gray-800 mb-6 mx-50">
+      <div className="mx-auto px-24 py-6 md:py-8 md:flex md:items-center md:justify-between">
         <div className="flex items-center justify-between">
           <div className="md:hidden">
             <button
