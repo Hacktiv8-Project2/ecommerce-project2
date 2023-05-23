@@ -57,7 +57,7 @@ function LoginPages() {
             Username
           </label>
           <input
-            className="border-b border-slate-300 w-full py-2 text-gray-700 leading-tight focus:outline-none focus:border-b-2 focus:border-sky-500 focus:transition focus:duration-120 text-sm"
+            className="border-b border-slate-300 w-full py-2 text-gray-700 leading-tight focus:outline-none focus:border-b-2 focus:border-[#003e29] focus:transition focus:duration-120 text-sm"
             id="username"
             type="text"
             placeholder="Masukkan username"
@@ -75,7 +75,7 @@ function LoginPages() {
           </label>
           <div className="relative">
             <input
-              className="text-sm border-b border-slate-300 w-full py-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-b-2 focus:border-sky-500 focus:transition focus:duration-120 pr-7"
+              className="text-sm border-b border-slate-300 w-full py-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-b-2 focus:border-[#003e29] focus:transition focus:duration-120 pr-7"
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Masukkan password"
@@ -95,16 +95,14 @@ function LoginPages() {
           </div>
         </div>
         <Button
-          className="w-full bg-sky-500 hover:bg-sky-600 active:bg-sky-500 text-white font-medium py-2 px-4 rounded-full focus:outline-none"
+          className="w-full bg-[#003e29] hover:bg-[#070707] active:bg-[#003e29] text-white font-medium py-2 px-4 rounded-full focus:outline-none"
           type="submit"
         >
           Masuk
         </Button>
         {auth.errorMessage &&
-          <p className="mt-5 text-red-500 text-sm -mb-2">{auth.errorMessage}</p>
+          <p className="mt-5 text-[#d7334c] text-sm -mb-2">{auth.errorMessage}</p>
         }
-        {/* <EyeIcon />
-        <EyeSlashIcon /> */}
       </form>
       <Loading isLoading={auth.isLoading} />
     </div>
