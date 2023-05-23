@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { getAllCart } from "../features/cartSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import { userLogout } from "../features/authSlice";
 import Button from "./button/Button";
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ShoppingBagIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 
 function NavbarComponent() {
   const dispatch = useDispatch();
@@ -21,10 +23,12 @@ function NavbarComponent() {
   };
 
   const handleLoginClick = () => {
+    setIsOpen(!isOpen);
     navigate("/login", {state: location}); 
   }
 
   const handleLogoutClick = () => {
+    setIsOpen(!isOpen);
     dispatch(userLogout());
     navigate("/", {replace: true});
   }
@@ -34,7 +38,7 @@ function NavbarComponent() {
   if (isUserAuthenticated) {
     button = (
       <Button
-        className="block py-2 pl-3 pr-4 text-white rounded md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+        className="text-gray-700 font-medium hover:text-[#003e29] dark:hover:text-[#003e29] w-full text-left border-b md:w-max md:text-center md:static md:border-none py-3"
         onClick={handleLogoutClick}>
           Logout
       </Button>
@@ -43,7 +47,7 @@ function NavbarComponent() {
   } else {
     button = (
       <Button
-        className="block py-2 pl-3 pr-4 text-white rounded md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+        className="text-gray-700 font-medium rounded hover:text-[#003e29] dark:hover:text-[#003e29] w-full text-left border-b md:w-max md:text-center md:static md:border-none py-3"
         onClick={handleLoginClick}>
         Login
       </Button>
@@ -51,88 +55,93 @@ function NavbarComponent() {
   }
 
   return (
-    <nav className="bg-gray-800 mb-6 sticky top-0 z-10">
-      <div className="mx-auto px-4 py-6 md:py-8 md:flex md:items-center md:justify-between">
-        <div className="flex items-center justify-between">
-          <div className="md:hidden">
-            <button
-              onClick={toggleMenu}
-              type="button"
-              className="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
-            >
-              <svg
-                className="h-6 w-6 fill-current"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {isOpen ? (
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div
-          className={`${
-            isOpen ? "block" : "hidden"
-          } md:block md:flex-grow md:items-center md:w-auto`}
-        >
-          <div className="text-sm md:flex-grow">
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border  md:flex-row md:space-x-8 md:mt-0 md:border-0">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-300"
-                    : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
+    <nav className="sticky top-0 z-10 bg-white flex items-center gap-x-12 px-5 py-5 border-b border-slate-200 md:px-10 xl:px-28">
+      <h1 className="text-3xl text-[#003e29] font-medium">
+        <Link to="/"
+        className="flex items-center gap-2">
+          <ShoppingBagIcon
+            className="w-8 inline -mt-1" 
+          />
+          <span>blipedia</span>
+        </Link>
+      </h1>
+      <Button
+        className="text-gray-500 border border-gray-300 rounded-sm px-1 md:hidden absolute right-5 z-50"
+        onClick={toggleMenu}
+        type="button"
+      >
+        {isOpen ?
+          <XMarkIcon
+            className="w-6 text-[#003e29]" 
+          /> :
+          <Bars3Icon
+            className="w-6 text-[#003e29]"
+          />
+        }
+      </Button>
+      <ul className={`${isOpen ? "translate-y-0" : "-translate-y-[100vh]"} absolute md:translate-y-0 top-0 right-0 left-0 p-10 md:p-0 h-screen md:h-max bg-white md:static flex justify-start flex-col md:flex-row md:items-center items-start gap-x-8 transition duration-300 ease-in-out`}>
+        <li className="mt-12 w-full md:w-max md:mt-0">
+          <NavLink
+            to="/"
+            onClick={toggleMenu}
+            className={({ isActive }) =>
+              (`
+                block py-3 font-medium border-b md:static md:border-none 
+                ${isActive
+                  ? "text-[#003e29] border-b-2 border-[#003e29] md:bg-transparent"
+                  : "text-gray-700 hover:text-[#003e29"
                 }
-              >
-                Home
-              </NavLink>
-              {(token === "admin@bukapedia.com") ? 
-                <NavLink
-                  to="/recap"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-yellow-300"
-                      : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                  }
-                >
-                  Recap
-                </NavLink> :
-                <NavLink
-                  to="/cart"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-yellow-300"
-                      : "block py-2 pl-3 pr-4 text-white rounded  md:hover:text-yellow-300 md:p-0 md:dark:hover:text-yellow-300"
-                  }
-                >
-                  <i class="fa-sharp fa-solid fa-cart-shopping"></i>Cart
-                  {cartCount?.length ? (
-                    <div className="absolute top-6 l text-xs rounded-full bg-red-500 text-white px-1">
-                      {cartCount.length}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                </NavLink>
+              `)
+            }
+          >
+            Home
+          </NavLink>
+        </li>
+        <li className="w-full md:w-max">
+          {(token === "admin@bukapedia.com") ?
+            <NavLink
+              to="/recap"
+              onClick={toggleMenu}
+              className={({ isActive }) =>
+              (`
+                block py-3 font-medium border-b md:static md:border-none 
+                ${isActive
+                  ? "text-[#003e29] border-b-2 border-[#003e29] md:bg-transparent"
+                  : "text-gray-700 hover:text-[#003e29"
+                }
+              `)
               }
-              {button}
-            </ul>
-          </div>
-        </div>
-      </div>
+            >
+              Recap
+            </NavLink> :
+            <NavLink
+              to="/cart"
+              onClick={toggleMenu}
+              className={({ isActive }) =>
+              (`
+                flex items-center gap-x-1 font-medium py-3 border-b md:static md:border-none 
+                ${isActive
+                  ? "text-[#003e29] md:bg-transparent border-b-2 border-[#003e29]"
+                  : "text-gray-700 hover:text-[#003e29"
+                }
+              `)
+              }
+            >
+              <ShoppingCartIcon
+                className="w-5 -mt-1" />
+                <span>Cart</span>
+              {(cartCount?.length !== 0) && (
+                <span className="absolute top-0 l text-xs rounded-full bg-[#d7334c] text-white px-1">
+                  {cartCount.length}
+                </span>
+              )}
+            </NavLink>
+          }
+        </li>
+        <li className="w-full md:w-max">
+          {button}
+        </li>
+      </ul>
     </nav>
   );
 }
