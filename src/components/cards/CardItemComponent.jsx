@@ -20,7 +20,7 @@ export default function CardItemComponent({ product }) {
   }
 
   return (
-    <div className="max-w-xs justify-self-center rounded-lg overflow-hidden border border-slate-200">
+    <div className="max-w-xs md:max-w-full justify-self-center rounded-lg overflow-hidden border border-slate-200">
       <Link 
         className="p-5 flex h-[200px]"
         to={`/detail/${product.id}`}>
