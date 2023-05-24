@@ -45,7 +45,7 @@ function CartItemComponent({cartProducts}) {
                 <div className="w-max flex border border-gray-300 font-medium py-1 text-sm px-2 gap-x-2 rounded-md">
                   <button
                     onClick={() => decrement(product.id)}>
-                    <PlusSmallIcon
+                    <MinusSmallIcon
                       className="w-5"
                     />
                   </button>
@@ -55,7 +55,7 @@ function CartItemComponent({cartProducts}) {
                   </p>
                   <button
                     onClick={() => increment(product.id)}>
-                    <MinusSmallIcon
+                    <PlusSmallIcon
                       className="w-5"
                     />
                   </button>

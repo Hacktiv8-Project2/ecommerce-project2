@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, getAllProduct } from "../../features/productSlice";
+import { fetchProducts } from "../../features/productSlice";
 import CardItemComponent from "./CardItemComponent";
+import Loading from "../Loading";
 
 function CardsComponent({ className }) {
   const dispatch = useDispatch();
 
-  const products = useSelector(getAllProduct);
+  const { isLoading, products } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -38,6 +39,7 @@ function CardsComponent({ className }) {
   return (
     <div className={className} id="product-list">
       {productList}
+      <Loading isLoading={isLoading} />
     </div>
   );
 }
