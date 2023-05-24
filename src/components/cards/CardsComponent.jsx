@@ -36,7 +36,7 @@ function CardsComponent({ className }) {
   })
 
   return (
-    <div className={className}>
+    <div className={className} id="product-list">
       {productList}
     </div>
   );
