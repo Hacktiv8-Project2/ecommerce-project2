@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import TableComponent from "../../components/TableComponent";
+import TableComponent from "../../components/table/TableComponent";
 import { getAllProduct } from "../../features/productSlice";
 
 function AdminHomePages() {
