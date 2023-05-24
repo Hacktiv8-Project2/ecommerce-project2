@@ -32,7 +32,8 @@ export const productSlice = createSlice({
       const { productId, quantity } = action.payload;
       
       const product = state.products.find((product) => product.id === productId);
-
+      if (product.stock < quantity) return;
+      
       product.stock -= quantity;
     },
   },
