@@ -3,9 +3,8 @@ import HeaderComponent from "./components/HeaderComponent";
 import AdminHomePages from "./pages/admin/AdminHomePages";
 import RecapPages from "./pages/admin/RecapPages";
 import CartPages from "./pages/CartPages";
-import HomePages from "./pages/HomePages";
 import LoginPages from "./pages/LoginPages";
-import ProtectedRoute from "./features/auth/ProtectedRoute";
+import ProtectedPage from "./components/ProtectedPage";
 import DetailPages from "./pages/DetailPages";
 
 function App() {
@@ -13,14 +12,7 @@ function App() {
     <BrowserRouter>
       <HeaderComponent />
       <Routes>
-        <Route 
-          path="/" 
-          element={
-            <ProtectedRoute>
-              <HomePages />
-            </ProtectedRoute>
-          } 
-        />
+        <Route path="/" element={<ProtectedPage />} />
         <Route path="/cart" element={<CartPages />}></Route>
         <Route path="/detail/:productId" element={<DetailPages />}></Route>
         <Route path="/login" element={<LoginPages />}></Route>

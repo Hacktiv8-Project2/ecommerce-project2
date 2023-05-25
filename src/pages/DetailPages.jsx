@@ -3,95 +3,129 @@ import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { getProductById } from "../features/productSlice";
 import { useState, React } from "react";
 import { addItem } from "../features/cartSlice";
+import { PlusSmallIcon, MinusSmallIcon } from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/24/solid";
+import Button from "../components/button/Button";
 
 function DetailPages() {
   const { productId } = useParams();
   const product = useSelector((state) => getProductById(state, productId));
-  const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
+  const [quantity, setQuantity] = useState("1");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const isUserLogin = useSelector((state) => state.auth.token);
 
-  // const handleSizeChange = (e) => {
-  //   setSelectedSize(e.target.value);
-  // };
-
-  const handleAddToCart = (item) => {
+  const handleAddToCart = () => {
     if (isUserLogin === null) {
-      return navigate("/login", {state: location});
+      return navigate("/login", { state: location });
     }
     
-    dispatch(addItem(item));
+    const productToAdd = {
+      ...product,
+      quantity: Number(quantity),
+    };
+  
+    for (let i = 0; i < productToAdd.quantity; i++) {
+      dispatch(addItem(productToAdd));
+    }
   };
+  
+  const incrementQuantity = () => {
+    setQuantity((quantity) => Number(quantity) + 1);
+  }
+
+  const decrementQuantity = () => {
+    if (quantity <= 1) return;
+
+    setQuantity((quantity) => Number(quantity) - 1);
+  }
 
   if (!product) {
     return <div>Loading...</div>;
   }
 
-  const { title, category, description, image, price } = product;
+  const { title, category, description, image, price, stock } = product;
 
   return (
-    <div className="w-screen bg-white flex items-center justify-center">
-      <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="md:flex">
-          <img src={image} alt={title} className="w-full md:w-1/3 h-auto" />
+    <div 
+      className="px-5 py-10 md:grid grid-cols-[1fr_1.5fr] md:grid-rows-[max-content_1fr] gap-x-8 md:max-w-[1000px] md:mx-auto md:px-0 lg:max-w-[1400px]">
+      <div className="list-none flex items-center text-gray-500 mb-5 col-start-2 col-end-3">
+        <Link to="/" className="text-[#003e29] hover:underline">
+          Home
+        </Link>
+        <MinusSmallIcon 
+          className="w-5 rotate-90" 
+        />
+        <span>
+          {category}
+        </span>
+      </div>
+      <div className="border border-gray-200 p-5 md:p-10 rounded-lg mb-5 col-start-1 col-end-2 row-start-1 row-end-3">
+        <img 
+          className="mx-auto w-64 md:w-3/5 object-contain"
+          src={image} 
+          alt={title}
+        />
+      </div>
 
-          <div className="p-6 md:w-2/3">
-            <nav className="text-sm mb-4">
-              <ol className="list-none p-0 inline-flex">
-                <li className="flex items-center">
-                  <Link to="/" className="text-blue-500 hover:underline">
-                    Home/ 
-                  </Link>
-                </li>
-                <li className="text-gray-500">{category}</li>
-              </ol>
-            </nav>
+      <div className="md:w-2/3 -mt-2">
+        <h2 className="text-2xl font-bold mb-2">
+          {title}
+        </h2>
 
-            <h2 className="text-2xl font-bold mb-2">{title}</h2>
-
-            <p className="text-gray-800 text-lg font-bold mb-4">
-              ${price}
-            </p>
-
-            <div className="flex items-center mb-2">
-              <select
-                className="w-29 px-2 py-1 border rounded"
-                value={selectedSize}
-                onChange={(e) => setSelectedSize(e.target.value)}
-              >
-                <option value="">Select Size</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-              </select>
-            </div>
-            
-            <div className="flex items-center mb-4">
-              <input
-                type="number"
-                min="1"
-                className="w-16 px-2 py-1 border rounded mr-2"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                onClick={() => handleAddToCart(product)}
-              >
-                Add to Cart
-              </button>
-
-
-            </div>
-
-
-            <h3 className="text-l font-bold mb-2">PRODUCT DETAILS</h3>
-
-            <p className="text-gray-800 mb-4">{description}</p>
+        <div className="flex items-center text-gray-600 mb-3">
+            <StarIcon className="w-4 text-[#26a126] -mt-0.5" />
+            <span className="text-sm ml-1">
+              {product.rating.rate}
+            </span>
+            <span className="text-sm ml-2">({product.rating.count} ulasan)</span> 
           </div>
+
+        <p className="text-[#d7334c] text-lg font-bold mb-10">
+          Rp {price}
+        </p>
+
+        <div className="flex items-center gap-x-10 mb-5">
+          <div 
+          className="w-24 flex border border-[#003e29] rounded-md px-2 py-0.5 text-[#003e29] font-medium">
+            <Button
+              onClick={decrementQuantity}>
+              <MinusSmallIcon className="w-5" />
+            </Button>
+            <input
+              className="w-10 text-center outline-none border-none"
+              type="text"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+            <Button
+              onClick={incrementQuantity}>
+              <PlusSmallIcon className="w-5" />
+            </Button>
+          </div>
+          <p 
+            className="text-gray-800 text-base font-medium">
+            Stock: {stock}
+          </p>
+        </div>
+
+        <Button
+          className="bg-[#003e29] hover:bg-[#070707] active:bg-[#003e29] text-white font-medium text-sm py-3 px-8 rounded-full"
+          onClick={handleAddToCart}
+        >
+          Add to Cart
+        </Button>
+        <div>
+          <h3 
+            className="font-bold mt-10">
+            PRODUCT DETAILS
+          </h3>
+
+          <p 
+            className="text-gray-500 mt-2 text-sm">
+            {description}
+          </p>
         </div>
       </div>
     </div>

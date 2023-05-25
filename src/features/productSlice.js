@@ -1,21 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const URL = "https://fakestoreapi.com/products";
+import CONFIG from "../config/config";
 
 const initialState = {
+  isLoading: false,
+  errorMessage: '',
   products: [],
 };
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get(URL);
-    const updatedProducts = response.data.map((res) => ({
-      ...res,
-      stock: 20,
-    }));
-    return updatedProducts;
+    try {
+      const response = await axios.get(`${CONFIG.baseURL}/products`);
+      const updatedProducts = response.data.map((res) => ({
+        ...res,
+        stock: 20,
+      }));
+      return updatedProducts;
+    }catch (error) {
+      throw(error);
+    }
   }
 );
 
@@ -23,18 +28,37 @@ export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    checkoutProducts(state, action) {
+    updateStock: (state, action) => {
+      const {id, stock } = action.payload;
+      state.products.filter((product) => product.id === id)
+      .map((product) => product.stock = stock);
+    },
+    checkoutProducts: (state, action) => {
       const { productId, quantity } = action.payload;
-      const product = state.products.find((p) => p.id === productId);
-      if (product) {
-        product.stock -= quantity;
-      }
+      
+      const product = state.products.find((product) => product.id === productId);
+      if (product.stock < quantity) return;
+
+      product.stock -= quantity;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.products = action.payload;
-    });
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = '';
+    })
+    .addCase(fetchProducts.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = '';
+
+      if (!state.products.length) {
+        state.products = action.payload;
+      }
+    })
+    .addCase(fetchProducts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.error.message
+    })
   },
 });
 
@@ -48,6 +72,6 @@ export const getProductById = (state, productId) => {
   return null;
 };
 
-export const { checkoutProducts } = productSlice.actions;
+export const { updateStock, checkoutProducts } = productSlice.actions;
 export const getAllProduct = (state) => state.products.products;
 export default productSlice.reducer;

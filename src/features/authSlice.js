@@ -1,28 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-export const userLogin = createAsyncThunk('auth/login', async ({username, password}) => {
-  try {
-    if (username === "johnd" && password === "m38rmF$") {
-
-      const response = await axios.post('https://fakestoreapi.com/auth/login', {
-        username,
-        password,
-      });
-
-      return response.data.token;
-    }
-
-    if (username === "admin@bukapedia.com" && password === "admin123") {
-      return username;
-    }
-
-    return Promise.reject("Invalid username and password");
-
-  } catch(error) {
-    throw(error);
-  }
-});
+import { authLogin } from "../services/auth";
 
 const initialState = {
   isLoading: false,
@@ -30,6 +7,17 @@ const initialState = {
   errorMessage: '',
   token: null,
 }
+
+export const userLogin = createAsyncThunk('auth/login', async ({username, password}) => {
+  try {
+    
+    const token = await authLogin({username, password});
+    return token;
+
+  } catch(error) {
+    throw(error);
+  }
+});
 
 const authSlice = createSlice({
   name: 'auth',
