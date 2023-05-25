@@ -1,21 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const URL = "https://fakestoreapi.com/products";
+import CONFIG from "../config/config";
 
 const initialState = {
+  isLoading: false,
+  errorMessage: '',
   products: [],
 };
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get(URL);
-    const updatedProducts = response.data.map((res) => ({
-      ...res,
-      stock: 20,
-    }));
-    return updatedProducts;
+    try {
+      const response = await axios.get(`${CONFIG.baseURL}/products`);
+      const updatedProducts = response.data.map((res) => ({
+        ...res,
+        stock: 20,
+      }));
+      return updatedProducts;
+    }catch (error) {
+      throw(error);
+    }
   }
 );
 
@@ -32,16 +37,28 @@ export const productSlice = createSlice({
       const { productId, quantity } = action.payload;
       
       const product = state.products.find((product) => product.id === productId);
+      if (product.stock < quantity) return;
 
       product.stock -= quantity;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = '';
+    })
+    .addCase(fetchProducts.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = '';
+
       if (!state.products.length) {
         state.products = action.payload;
       }
-    });
+    })
+    .addCase(fetchProducts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.error.message
+    })
   },
 });
 

@@ -1,28 +1,30 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getAllCheck } from "../../features/cartSlice";
 
 function RecapPages() {
   const checkProduct = useSelector(getAllCheck);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto xl:max-w-[1400px] mx-auto my-10">
       <table className="table-auto min-w-full">
         <thead>
-          <tr className="bg-blue-500">
-            <th className="px-4 py-2">Products</th>
-            <th className="px-4 py-2">Harga</th>
-            <th className="px-4 py-2">Terjual</th>
-            <th className="px-4 py-2">Pendapatan</th>
+          <tr className="uppercase text-left border-b border-gray-300 text-gray-500">
+            <th className="py-5">Products</th>
+            <th className="px-10 py-5">Harga</th>
+            <th className="px-10 py-5">Terjual</th>
+            <th className="px-10 py-5">Pendapatan</th>
           </tr>
         </thead>
         <tbody>
-          {checkProduct?.map((item, idx) => (
-            <tr key={idx} className={idx % 2 === 0 ? "bg-gray-100" : ""}>
-              <td className="border px-4 py-2">
+          {checkProduct?.map((item) => (
+            <tr
+              className="even:bg-gray-100" 
+              key={item.id}>
+              <td className="py-5">
                 <div className="flex items-center">
                   <img
-                    className="w-16 h-16 object-cover mr-4"
+                    className="w-24 h-24 object-contain mr-4"
                     src={item.image}
                     alt=""
                   />
@@ -35,26 +37,31 @@ function RecapPages() {
                   </div>
                 </div>
               </td>
-              <td className="border px-4 py-2">
-                <div className="text-center">{item.price}</div>
+              <td className="px-10 py-5">
+                <div className="text-left">{item.price}</div>
               </td>
-              <td className="border px-4 py-2">
-                <div className="text-center">{item.qty}</div>
+              <td className="px-10 py-5">
+                <div className="text-left">{item.qty}</div>
               </td>
-              <td className="border px-4 py-2">
-                <div className="text-center">{item.qty * item.price}</div>
+              <td className="px-10 py-5">
+                <div className="text-left">{item.qty * item.price}</div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="border text-end font-bold pl-2 pr-10 py-2 bg-blue-500">
-        Total Pendapatan :{" "}$
-        {checkProduct
-          .reduce((sum, item) => {
-            return sum + item.qty * item.price;
-          }, 0)
-          .toFixed(2)}
+      <div className="w-full font-medium py-10 flex justify-between">
+        <span className="uppercase text-gray-500">
+          Total Pendapatan
+        </span>
+        <span className="text-gray-500 mr-16">
+          Rp {" "}
+          {checkProduct
+            .reduce((sum, item) => (
+              sum + item.qty * item.price
+            ), 0)
+            .toFixed(2)}
+        </span>
       </div>
     </div>
   );
