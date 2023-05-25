@@ -11,7 +11,7 @@ function CartBoxComponent({ cartProduct, dispatch }) {
       dispatch(checkoutProducts({ productId: item.id, quantity: item.qty }));
     });
     dispatch(setCheckout(cartProduct));
-    dispatch(clearCart());
+    // dispatch(clearCart());
     // navigate("/");
   };
 
