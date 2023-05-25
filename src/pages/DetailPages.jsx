@@ -93,7 +93,7 @@ function DetailPages() {
           </div>
 
         <p className="text-[#d7334c] text-lg font-bold mb-10">
-          Rp {price}
+          $ {price}
         </p>
 
         <div className="flex items-center gap-x-10 mb-5">
