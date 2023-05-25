@@ -29,14 +29,14 @@ function CartBoxComponent({ cartProducts }) {
       </p>
       <p className="text-gray-700">Price</p>
       <p className="justify-self-end font-medium">
-        Rp {" "}
+        $ {" "}
         {cartProducts.reduce((sum, item) => (
           sum + item.price
         ), 0)}
       </p>
       <p className="text-gray-700">Subtotal</p>
       <p className="justify-self-end font-medium">
-        Rp {" "}
+        $ {" "}
         {cartProducts
           .reduce((sum, item) => (
             sum + item.qty * item.price

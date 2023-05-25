@@ -74,7 +74,7 @@ function CartItemComponent({cartProducts}) {
             </td>
             <td className="order-3 h-max">
               <p className="text-[#d7334c] text-sm font-medium md:text-base">
-                Rp {product.price}
+                $ {product.price}
               </p>
             </td>
           </tr>
