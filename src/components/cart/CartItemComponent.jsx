@@ -62,7 +62,7 @@ function CartItemComponent({cartProducts}) {
                 </div>
                 {product.qty > product.stock 
                     && 
-                    <p className="text-sm text-[#d7334c]">kuantitas melebihi stok!</p>
+                    <p className="text-sm text-[#d7334c]">Kuantitas melebihi stok! Maksimal pembelian {product.stock} pcs.</p>
                 }
               </div>
               <button
