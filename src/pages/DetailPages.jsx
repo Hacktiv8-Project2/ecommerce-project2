@@ -44,6 +44,13 @@ function DetailPages() {
     setQuantity((quantity) => Number(quantity) - 1);
   }
 
+  const handleQuantityChange = (e) => {
+    let value = e.target.value;
+    value = value.replace(/\D/g, ''); // Remove non-numeric characters
+    value = Math.min(Number(value), stock); // Ensure value is not larger than stock
+    setQuantity(value);
+  };
+
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -101,6 +108,7 @@ function DetailPages() {
               type="text"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
+              onBlur={handleQuantityChange}
             />
             <Button
               onClick={incrementQuantity}>
