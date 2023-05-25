@@ -29,11 +29,14 @@ function DetailPages() {
     for (let i = 0; i < productToAdd.quantity; i++) {
       dispatch(addItem(productToAdd));
     }
+    
   };
   
   const incrementQuantity = () => {
-    setQuantity((quantity) => Number(quantity) + 1);
-  }
+    if (quantity < stock) {
+      setQuantity((prevQuantity) => Number(prevQuantity) + 1);
+    }
+  };
 
   const decrementQuantity = () => {
     if (quantity <= 1) return;
