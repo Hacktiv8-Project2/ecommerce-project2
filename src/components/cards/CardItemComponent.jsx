@@ -32,7 +32,7 @@ export default function CardItemComponent({ product }) {
         </Link>
 
         <div className="font-medium mb-2 text-[#d7334c]">
-          Rp {product.price}
+          $ {product.price}
         </div>
         <p className="text-gray-700 text-sm line-clamp-2 leading-relaxed">{product.description}</p>
 
